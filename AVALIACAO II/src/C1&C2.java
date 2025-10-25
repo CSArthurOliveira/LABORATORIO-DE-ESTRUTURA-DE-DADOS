@@ -10,7 +10,7 @@ class Grafo {
     protected int totalVertices;
     protected int totalArestas;
     protected int grau; // Grau máximo do grafo
-    protected static final int SEM_CONEXAO = -1; // Representa ausência de aresta
+    protected static final int SEM_CONEXAO = 999999999; // Representa ausência de aresta
 
     /**
      * Construtor: inicia o grafo vazio.
@@ -40,7 +40,11 @@ class Grafo {
                 String[] valores = linha.trim().split("\\s+");
                 for (int j = 0; j < totalVertices; j++) {
                     int peso = Integer.parseInt(valores[j]);
-                    matrizDistancias[i][j] = peso;
+                    if (peso > 0) {
+                        matrizDistancias[i][j] = peso;
+                    } else {
+                        matrizDistancias[i][j] = SEM_CONEXAO;
+                    }
                     if (i < j && peso != SEM_CONEXAO) totalArestas++; // Conta arestas únicas
                 }
             }
@@ -324,6 +328,24 @@ class Grafo {
         }
     }
 
+    // ================================
+    // 14. Mostrar lista de adjacência
+    // ================================
+    public void imprimirListaAdjacencia() {
+        System.out.println("Lista de Adjacência:");
+        for (int i = 0; i < totalVertices; i++) {
+            System.out.print("Vértice " + i + ": ");
+            boolean primeiro = true;
+            for (int j = 0; j < totalVertices; j++) {
+                if (matrizDistancias[i][j] != SEM_CONEXAO && matrizDistancias[i][j] > 0) {
+                    if (!primeiro) System.out.print(", ");
+                    System.out.print(j + "(peso=" + matrizDistancias[i][j] + ")");
+                    primeiro = false;
+                }
+            }
+            System.out.println();
+        }
+    }
 
     static void main() {
         Grafo g = new Grafo();
