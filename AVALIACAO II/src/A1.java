@@ -19,23 +19,23 @@ class ArvoreBinaria {
 
     protected void inserir(int valor) {
         try {
-            this.raiz = inserindo(this.raiz, valor);
+            this.raiz = inserirNo(this.raiz, valor);
             System.out.println("Valor inserido com sucesso!");
         } catch (IllegalArgumentException exception) {
-            System.out.println("Falha ao inserir, Valor duplicado!");
+            System.out.println("Falha ao inserir, valor duplicado!");
         }
     }
 
-    private No inserindo(No raiz, int valor) {
+    private No inserirNo(No raiz, int valor) {
         if (raiz == null) {
             raiz = new No();
             raiz.valor = valor;
             return raiz;
         } else if (valor != raiz.valor) {
             if (valor < raiz.valor) {
-                raiz.esquerda = inserindo(raiz.esquerda, valor);
+                raiz.esquerda = inserirNo(raiz.esquerda, valor);
             } else {
-                raiz.direita = inserindo(raiz.direita, valor);
+                raiz.direita = inserirNo(raiz.direita, valor);
             }
         } else {
             throw new IllegalArgumentException();
@@ -44,24 +44,23 @@ class ArvoreBinaria {
         return raiz;
     }
 
-
     protected void remover(int alvo) {
         try {
-            this.raiz = removendo(this.raiz, alvo);
+            this.raiz = removerNo(this.raiz, alvo);
             System.out.println("Valor removido com sucesso!");
         } catch (IllegalArgumentException exception) {
             System.out.println("Falha ao remover, arvore vazia!");
         }
     }
 
-    private No removendo(No raiz, int alvo) {
+    private No removerNo(No raiz, int alvo) {
         if (raiz == null) {
             throw new IllegalArgumentException();
-        }else{
+        } else {
             if (alvo < raiz.valor) {
-                raiz.esquerda = removendo(raiz.esquerda, alvo);
+                raiz.esquerda = removerNo(raiz.esquerda, alvo);
             } else if (alvo > raiz.valor) {
-                raiz.direita = removendo(raiz.direita, alvo);
+                raiz.direita = removerNo(raiz.direita, alvo);
             } else {
                 if (raiz.esquerda == null && raiz.direita == null) {
                     return null;
@@ -70,9 +69,9 @@ class ArvoreBinaria {
                 } else if (raiz.direita == null) {
                     return raiz.esquerda;
                 } else {
-                    No sucessor = buscar_menor(raiz.direita);
+                    No sucessor = buscarMenor(raiz.direita);
                     raiz.valor = sucessor.valor;
-                    raiz.direita = removendo(raiz.direita, sucessor.valor);
+                    raiz.direita = removerNo(raiz.direita, sucessor.valor);
                 }
             }
         }
@@ -80,33 +79,32 @@ class ArvoreBinaria {
         return raiz;
     }
 
-    private void pre_ordem(No raiz) {
+    private void preOrdem(No raiz) {
         if (raiz == null) {
             return;
         } else {
             System.out.print(raiz.valor + " ");
-            pre_ordem(raiz.esquerda);
-            pre_ordem(raiz.direita);
+            preOrdem(raiz.esquerda);
+            preOrdem(raiz.direita);
         }
     }
 
-    private void em_ordem(No raiz) {
+    private void emOrdem(No raiz) {
         if (raiz == null) {
             return;
         } else {
-            em_ordem(raiz.esquerda);
+            emOrdem(raiz.esquerda);
             System.out.print(raiz.valor + " ");
-            em_ordem(raiz.direita);
+            emOrdem(raiz.direita);
         }
     }
 
-
-    private void pos_ordem(No raiz) {
+    private void posOrdem(No raiz) {
         if (raiz == null) {
             return;
         } else {
-            pos_ordem(raiz.esquerda);
-            pos_ordem(raiz.direita);
+            posOrdem(raiz.esquerda);
+            posOrdem(raiz.direita);
             System.out.print(raiz.valor + " ");
         }
     }
@@ -117,13 +115,13 @@ class ArvoreBinaria {
         } else {
             switch (tipo) {
                 case 1:
-                    pre_ordem(this.raiz);
+                    preOrdem(this.raiz);
                     break;
                 case 2:
-                    em_ordem(this.raiz);
+                    emOrdem(this.raiz);
                     break;
                 case 3:
-                    pos_ordem(this.raiz);
+                    posOrdem(this.raiz);
                     break;
                 default:
                     System.out.println("Percurso inválido!");
@@ -131,14 +129,14 @@ class ArvoreBinaria {
         }
     }
 
-    private No buscar_menor(No raiz) {
+    private No buscarMenor(No raiz) {
         while (raiz.esquerda != null) {
             raiz = raiz.esquerda;
         }
         return raiz;
     }
 
-    protected void limpar_terminal() {
+    protected void limparTerminal() {
         for (int i = 0; i < 25; i++) {
             System.out.println();
         }
@@ -148,42 +146,42 @@ class ArvoreBinaria {
         Scanner scanner = new Scanner(System.in);
         int operacao;
         do {
-            limpar_terminal();
-            System.out.println("1 - INSERIR");
-            System.out.println("2 - REMOVER");
-            System.out.println("3 - PERCURSO PRE ORDEM");
-            System.out.println("4 - PERCURSO EM ORDEM");
-            System.out.println("5 - PERCURSO POS ORDEM");
-            System.out.println("6 - SAIR");
-            System.out.print("INFORME A OPERAÇÃO DESEJADA: ");
+            limparTerminal();
+            System.out.println("1 - Inserir");
+            System.out.println("2 - Remover");
+            System.out.println("3 - Percurso Pre-Ordem");
+            System.out.println("4 - Percurso Em-Ordem");
+            System.out.println("5 - Percurso Pos-Ordem");
+            System.out.println("6 - Sair");
+            System.out.print("Informe a operação desejada: ");
             operacao = scanner.nextInt();
             switch (operacao) {
                 case 1:
-                    limpar_terminal();
-                    System.out.print("INFORME O VALOR QUE DESEJA INSERIR: ");
-                    int para_inserir = scanner.nextInt();
-                    inserir(para_inserir);
+                    limparTerminal();
+                    System.out.print("Informe o valor que deseja inserir: ");
+                    int valorParaInserir = scanner.nextInt();
+                    inserir(valorParaInserir);
                     new Scanner(System.in).nextLine();
                     break;
                 case 2:
-                    limpar_terminal();
-                    System.out.print("INFORME A VALOR QUE DESEJA REMOVER: ");
-                    int para_remover = scanner.nextInt();
-                    remover(para_remover);
+                    limparTerminal();
+                    System.out.print("Informe o valor que deseja remover: ");
+                    int valorParaRemover = scanner.nextInt();
+                    remover(valorParaRemover);
                     new Scanner(System.in).nextLine();
                     break;
                 case 3:
-                    limpar_terminal();
+                    limparTerminal();
                     percorrer(1);
                     new Scanner(System.in).nextLine();
                     break;
                 case 4:
-                    limpar_terminal();
+                    limparTerminal();
                     percorrer(2);
                     new Scanner(System.in).nextLine();
                     break;
                 case 5:
-                    limpar_terminal();
+                    limparTerminal();
                     percorrer(3);
                     new Scanner(System.in).nextLine();
                     break;

@@ -355,5 +355,16 @@ class Grafo {
         g.imprimirGrauVertices();
         g.dfs(0);
         g.bfs(0);
+
+        /*
+        System.out.println();
+        int[][] matrizFloydWarshall = g.floydWarshall();
+        for(int i = 0; i < matrizFloydWarshall.length; i++){
+            for(int j = 0; j < matrizFloydWarshall[i].length; j++){
+                System.out.print(matrizFloydWarshall[i][j] + " ");
+            }
+            System.out.println();
+        }
+        */
     }
 }

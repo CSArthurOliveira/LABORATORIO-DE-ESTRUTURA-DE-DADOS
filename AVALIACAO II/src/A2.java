@@ -2,24 +2,23 @@ import java.util.Scanner;
 
 class ArvoreMelhorada extends ArvoreBinaria {
 
-    void buscar_maior() {
+    void buscarMaior() {
         try {
-            No maior = buscando_maior(this.raiz);
+            No maior = buscarNoMaior(this.raiz);
             System.out.println("Maior valor: " + maior.valor);
         } catch (IllegalArgumentException exception) {
             System.out.println("Falha ao buscar maior valor, arvore vazia!");
         }
     }
 
-    private No buscando_maior(No raiz) {
+    private No buscarNoMaior(No raiz) {
         if (raiz == null) {
             throw new IllegalArgumentException();
         } else {
             if (raiz.direita != null) {
-                raiz = buscando_maior(raiz.direita);
+                raiz = buscarNoMaior(raiz.direita);
             }
         }
-
         return raiz;
     }
 
@@ -28,49 +27,49 @@ class ArvoreMelhorada extends ArvoreBinaria {
         Scanner scanner = new Scanner(System.in);
         int operacao;
         do {
-            limpar_terminal();
-            System.out.println("1 - INSERIR");
-            System.out.println("2 - REMOVER");
-            System.out.println("3 - PERCURSO PRE ORDEM");
-            System.out.println("4 - PERCURSO EM ORDEM");
-            System.out.println("5 - PERCURSO POS ORDEM");
-            System.out.println("6 - BUSCAR MAIOR VALOR");
-            System.out.println("7 - SAIR");
-            System.out.print("INFORME A OPERAÇÃO DESEJADA: ");
+            limparTerminal();
+            System.out.println("1 - Inserir");
+            System.out.println("2 - Remover");
+            System.out.println("3 - Percurso Pre-Ordem");
+            System.out.println("4 - Percurso Em-Ordem");
+            System.out.println("5 - Percurso Pos-Ordem");
+            System.out.println("6 - Buscar Maior Valor");
+            System.out.println("7 - Sair");
+            System.out.print("Informe a operação desejada: ");
             operacao = scanner.nextInt();
             switch (operacao) {
                 case 1:
-                    limpar_terminal();
-                    System.out.print("INFORME O VALOR QUE DESEJA INSERIR: ");
-                    int para_inserir = scanner.nextInt();
-                    inserir(para_inserir);
+                    limparTerminal();
+                    System.out.print("Informe o valor que deseja inserir: ");
+                    int valorParaInserir = scanner.nextInt();
+                    inserir(valorParaInserir);
                     new Scanner(System.in).nextLine();
                     break;
                 case 2:
-                    limpar_terminal();
-                    System.out.print("INFORME A VALOR QUE DESEJA REMOVER: ");
-                    int para_remover = scanner.nextInt();
-                    remover(para_remover);
+                    limparTerminal();
+                    System.out.print("Informe o valor que deseja remover: ");
+                    int valorParaRemover = scanner.nextInt();
+                    remover(valorParaRemover);
                     new Scanner(System.in).nextLine();
                     break;
                 case 3:
-                    limpar_terminal();
+                    limparTerminal();
                     percorrer(1);
                     new Scanner(System.in).nextLine();
                     break;
                 case 4:
-                    limpar_terminal();
+                    limparTerminal();
                     percorrer(2);
                     new Scanner(System.in).nextLine();
                     break;
                 case 5:
-                    limpar_terminal();
+                    limparTerminal();
                     percorrer(3);
                     new Scanner(System.in).nextLine();
                     break;
                 case 6:
-                    limpar_terminal();
-                    buscar_maior();
+                    limparTerminal();
+                    buscarMaior();
                     new Scanner(System.in).nextLine();
                     break;
                 case 7:
