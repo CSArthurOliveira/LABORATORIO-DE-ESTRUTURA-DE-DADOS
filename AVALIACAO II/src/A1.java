@@ -10,10 +10,10 @@ class No {
     }
 }
 
-class ArvoreBinaria {
+class ArvoreBinariaA1 {
     protected No raiz;
 
-    public ArvoreBinaria() {
+    public ArvoreBinariaA1() {
         System.out.println("Arvore inicializada!");
     }
 
@@ -80,19 +80,15 @@ class ArvoreBinaria {
     }
 
     private void preOrdem(No raiz) {
-        if (raiz == null) {
-            return;
-        } else {
-            System.out.print(raiz.valor + " ");
-            preOrdem(raiz.esquerda);
-            preOrdem(raiz.direita);
+        if (!(raiz == null)) {
+                System.out.print(raiz.valor + " ");
+                preOrdem(raiz.esquerda);
+                preOrdem(raiz.direita);
         }
     }
 
     private void emOrdem(No raiz) {
-        if (raiz == null) {
-            return;
-        } else {
+        if (!(raiz == null)) {
             emOrdem(raiz.esquerda);
             System.out.print(raiz.valor + " ");
             emOrdem(raiz.direita);
@@ -100,9 +96,7 @@ class ArvoreBinaria {
     }
 
     private void posOrdem(No raiz) {
-        if (raiz == null) {
-            return;
-        } else {
+        if (!(raiz == null)) {
             posOrdem(raiz.esquerda);
             posOrdem(raiz.direita);
             System.out.print(raiz.valor + " ");
@@ -193,5 +187,12 @@ class ArvoreBinaria {
                     new Scanner(System.in).nextLine();
             }
         } while (operacao != 6);
+    }
+}
+
+class Quest1 {
+    static void main() {
+        ArvoreBinariaA1 arvore = new ArvoreBinariaA1();
+        arvore.menu();
     }
 }

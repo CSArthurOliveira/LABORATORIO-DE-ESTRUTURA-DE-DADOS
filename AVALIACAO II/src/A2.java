@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class ArvoreMelhorada extends ArvoreBinaria {
+class ArvoreMelhoradaA2 extends ArvoreBinariaA1 {
 
     void buscarMaior() {
         try {
@@ -80,5 +80,12 @@ class ArvoreMelhorada extends ArvoreBinaria {
                     new Scanner(System.in).nextLine();
             }
         } while (operacao != 7);
+    }
+}
+
+class Quest2{
+    static void main() {
+        ArvoreMelhoradaA2 arvore = new ArvoreMelhoradaA2();
+        arvore.menu();
     }
 }
