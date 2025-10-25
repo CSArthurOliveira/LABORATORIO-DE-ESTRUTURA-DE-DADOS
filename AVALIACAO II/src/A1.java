@@ -57,23 +57,23 @@ class ArvoreBinaria {
     private No removendo(No raiz, int alvo) {
         if (raiz == null) {
             throw new IllegalArgumentException();
-        }
-
-        if (alvo < raiz.valor) {
-            raiz.esquerda = removendo(raiz.esquerda, alvo);
-        } else if (alvo > raiz.valor) {
-            raiz.direita = removendo(raiz.direita, alvo);
-        } else {
-            if (raiz.esquerda == null && raiz.direita == null) {
-                return null;
-            } else if (raiz.esquerda == null) {
-                return raiz.direita;
-            } else if (raiz.direita == null) {
-                return raiz.esquerda;
+        }else{
+            if (alvo < raiz.valor) {
+                raiz.esquerda = removendo(raiz.esquerda, alvo);
+            } else if (alvo > raiz.valor) {
+                raiz.direita = removendo(raiz.direita, alvo);
             } else {
-                No sucessor = buscar_menor(raiz.direita);
-                raiz.valor = sucessor.valor;
-                raiz.direita = removendo(raiz.direita, sucessor.valor);
+                if (raiz.esquerda == null && raiz.direita == null) {
+                    return null;
+                } else if (raiz.esquerda == null) {
+                    return raiz.direita;
+                } else if (raiz.direita == null) {
+                    return raiz.esquerda;
+                } else {
+                    No sucessor = buscar_menor(raiz.direita);
+                    raiz.valor = sucessor.valor;
+                    raiz.direita = removendo(raiz.direita, sucessor.valor);
+                }
             }
         }
 
