@@ -58,8 +58,11 @@ class ArvoreBinaria {
             atual.esquerda = inserirRec(atual.esquerda, p);
         else if (p.nome.compareToIgnoreCase(atual.pessoa.nome) > 0)
             atual.direita = inserirRec(atual.direita, p);
-        else
+        else{
             System.out.println("Nome ja existente: "+ p.nome);
+            new Scanner(System.in).nextLine();
+        }
+
 
         return atual;
     }
@@ -87,7 +90,7 @@ class ArvoreBinaria {
     private void exibirRec(NoArvore no){
         if (no != null){
             exibirRec(no.esquerda);
-            System.out.println(no.pessoa.nome + "("+ no.pessoa.sexo +")Idade: "+ no.pessoa.idade + "Peso: "+ no.pessoa.peso);
+            System.out.println(no.pessoa.nome + "("+ no.pessoa.sexo +") Idade: "+ no.pessoa.idade + " Peso: "+ no.pessoa.peso);
             exibirRec(no.direita);
         }
     }

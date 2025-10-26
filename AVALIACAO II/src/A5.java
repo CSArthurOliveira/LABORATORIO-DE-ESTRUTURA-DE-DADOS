@@ -90,6 +90,8 @@ class ArvoreBuscaBinaria {
     }
 
     private boolean ehCheiaRec(Node node) {
+        if(this.raiz == null) return false;
+
         if (node == null) return true;
 
         if (node.esquerdo == null && node.direito == null) return true;
