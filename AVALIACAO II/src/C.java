@@ -356,7 +356,6 @@ class Grafo {
         g.dfs(0);
         g.bfs(0);
 
-        /*
         System.out.println();
         int[][] matrizFloydWarshall = g.floydWarshall();
         for(int i = 0; i < matrizFloydWarshall.length; i++){
@@ -365,6 +364,6 @@ class Grafo {
             }
             System.out.println();
         }
-        */
+
     }
 }

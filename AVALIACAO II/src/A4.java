@@ -14,24 +14,25 @@ class NoArvoreA4 {
 }
 
 class ArvoreA4 {
-    private NoArvoreA4 raiz;
+    protected NoArvoreA4 raiz;
 
     public void inserir(int chave){
         raiz = inserirRec(raiz, chave);
     }
 
-    private NoArvoreA4 inserirRec(NoArvoreA4 no, int chave){
+    protected NoArvoreA4 inserirRec(NoArvoreA4 no, int valor){
         if (no==null){
-            return new NoArvoreA4(chave);
+            return new NoArvoreA4(valor);
         }
 
-        if (chave < no.chave) {
-            no.esquerda = inserirRec(no.esquerda, chave);
-        }else if (chave > no.chave){
-            no.direita = inserirRec(no.direita, chave);
+        if (valor < no.chave) {
+            no.esquerda = inserirRec(no.esquerda, valor);
+        }else if (valor > no.chave){
+            no.direita = inserirRec(no.direita, valor);
         } else {
             no.contador++;
         }
+
         return no;
     }
 
@@ -39,7 +40,7 @@ class ArvoreA4 {
         raiz = removerRec(raiz, chave);
     }
 
-    private NoArvoreA4 removerRec(NoArvoreA4 no, int chave){
+    protected NoArvoreA4 removerRec(NoArvoreA4 no, int chave){
         if (no == null) return null;
         if (chave < no.chave) {
             no.esquerda = removerRec(no.esquerda, chave);
@@ -65,7 +66,8 @@ class ArvoreA4 {
         }
         return no;
     }
-    private int encontrarMenor(NoArvoreA4 no){
+
+    protected int encontrarMenor(NoArvoreA4 no){
         int menor = no.chave;
         while (no.esquerda != null) {
             menor = no.esquerda.chave;
@@ -74,21 +76,57 @@ class ArvoreA4 {
         return menor;
     }
 
+    public void exibirPreOrdem() {
+        if (raiz == null) {
+            System.out.println("Arvore vazia!");
+        }else {
+            System.out.println("Elementos da arvore (valor(ocorrencias)): ");
+            exibirPreOrdemRec(raiz);
+            System.out.println();
+        }
+    }
+
+    protected void exibirPreOrdemRec(NoArvoreA4 no) {
+        if (no != null){
+            System.out.print(no.chave + "(" + no.contador + ") ");
+            exibirPreOrdemRec(no.esquerda);
+            exibirPreOrdemRec(no.direita);
+        }
+    }
+
     public void exibirEmOrdem() {
         if (raiz == null) {
             System.out.println("Arvore vazia!");
         }else {
             System.out.println("Elementos da arvore (valor(ocorrencias)): ");
-            exibirEmOrdem(raiz);
+            exibirEmOrdemRec(raiz);
             System.out.println();
         }
     }
 
-    private void exibirEmOrdem(NoArvoreA4 no) {
+    protected void exibirEmOrdemRec(NoArvoreA4 no) {
         if (no != null){
-            exibirEmOrdem(no.esquerda);
+            exibirEmOrdemRec(no.esquerda);
             System.out.print(no.chave + "(" + no.contador + ") ");
-            exibirEmOrdem(no.direita);
+            exibirEmOrdemRec(no.direita);
+        }
+    }
+
+    public void exibirPosOrdem() {
+        if (raiz == null) {
+            System.out.println("Arvore vazia!");
+        }else {
+            System.out.println("Elementos da arvore (valor(ocorrencias)): ");
+            exibirPosOrdemRec(raiz);
+            System.out.println();
+        }
+    }
+
+    protected void exibirPosOrdemRec(NoArvoreA4 no) {
+        if (no != null){
+            exibirPosOrdemRec(no.esquerda);
+            exibirPosOrdemRec(no.direita);
+            System.out.print(no.chave + "(" + no.contador + ") ");
         }
     }
 }
@@ -103,7 +141,9 @@ class Quest4 {
             System.out.println("\n===== MENU =====");
             System.out.println("1 - Inserir elemento");
             System.out.println("2 - Remover elemento");
-            System.out.println("3 - Exibir arvore em ordem");
+            System.out.println("3 - Exibir arvore em Pre Ordem");
+            System.out.println("4 - Exibir arvore em Ordem Simetrica");
+            System.out.println("5 - Exibir arvore em Pos Ordem");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opcao: ");
             opcao = input.nextInt();
@@ -127,8 +167,20 @@ class Quest4 {
                     break;
 
                 case 3:
-                    System.out.println("--- Arvore em ordem ---");
+                    System.out.println("--- Arvore em Pre Ordem ---");
+                    arvore.exibirPreOrdem();
+                    esperarEnter();
+                    break;
+
+                case 4:
+                    System.out.println("--- Arvore em Ordem Simetrica ---");
                     arvore.exibirEmOrdem();
+                    esperarEnter();
+                    break;
+
+                case 5:
+                    System.out.println("--- Arvore em Pos Ordem ---");
+                    arvore.exibirPosOrdem();
                     esperarEnter();
                     break;
 
