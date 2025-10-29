@@ -6,7 +6,7 @@ class Pessoa {
     int idade;
     float peso;
 
-    public Pessoa(String nome, char sexo, int idade, float peso){
+    Pessoa(String nome, char sexo, int idade, float peso){
 
         this.nome = nome;
         this.sexo = sexo;
@@ -21,7 +21,7 @@ class NoArvore {
     NoArvore esquerda;
     NoArvore direita;
 
-    public NoArvore(Pessoa p) {
+    NoArvore(Pessoa p) {
         this.pessoa = p;
         esquerda = null;
         direita = null;
@@ -33,7 +33,7 @@ class NoLista {
     Pessoa pessoa;
     NoLista prox;
 
-    public NoLista (Pessoa p) {
+    NoLista (Pessoa p) {
         this.pessoa = p;
         this.prox = null;
     }
@@ -42,14 +42,16 @@ class NoLista {
 class ArvoreBinaria {
     NoArvore raiz;
 
-    public ArvoreBinaria() {
+    ArvoreBinaria() {
         raiz = null;
+        System.out.println("Arvore inicializada!");
     }
 
     // Inserção na bst (ordem alfabetica)
     public void inserir(Pessoa p) {
         raiz = inserirRec(raiz, p);
     }
+
     private NoArvore inserirRec(NoArvore atual, Pessoa p) {
         if (atual == null) {
             return new NoArvore(p);
@@ -66,10 +68,55 @@ class ArvoreBinaria {
 
         return atual;
     }
+
+    public void remover(String nomeAlvo) {
+        try{
+            raiz = removerRec(raiz, nomeAlvo);
+            System.out.println("Pessoa removida com sucesso!");
+        }catch(IllegalArgumentException exception){
+            System.out.println("Erro ao remover!");
+        }
+    }
+
+    private NoArvore removerRec(NoArvore atual, String alvo) {
+            if(atual == null){
+                throw new IllegalArgumentException();
+            }else{
+                if(alvo.compareToIgnoreCase(atual.pessoa.nome) < 0){
+                    atual.esquerda = removerRec(atual.esquerda,alvo);
+                }else if(alvo.compareToIgnoreCase(atual.pessoa.nome) > 0){
+                    atual.direita = removerRec(atual.direita, alvo);
+                }else{
+                    if(atual.direita == null && atual.esquerda == null){
+                        return null;
+                    }else if(atual.esquerda == null){
+                        return atual.direita;
+                    }else if(atual.direita == null){
+                        return atual.esquerda;
+                    }else{
+                        NoArvore sucessor = buscarMenor(atual.direita);
+                        atual.pessoa = sucessor.pessoa;
+                        atual.direita = removerRec(atual.direita, sucessor.pessoa.nome);
+                    }
+                }
+            }
+
+            return atual;
+    }
+
+    private NoArvore buscarMenor(NoArvore raiz) {
+        NoArvore atual = raiz;
+        while (atual.esquerda != null) {
+            atual = atual.esquerda;
+        }
+
+        return atual;
+    }
     // Geração das listas
     public void gerarListas(Lista homens, Lista mulheres) {
         percorrerArvore(raiz, homens, mulheres);
     }
+
     private void percorrerArvore(NoArvore no, Lista homens, Lista mulheres) {
         if (no != null){
             percorrerArvore(no.esquerda, homens, mulheres);
@@ -84,14 +131,39 @@ class ArvoreBinaria {
     }
 
     //Exibir a arvore
-    public void exibirEmOrdem(){
-        exibirRec(raiz);
+    public void exibirPreOrdem(){
+        exibirPreOrdemRec(raiz);
     }
-    private void exibirRec(NoArvore no){
-        if (no != null){
-            exibirRec(no.esquerda);
+
+    private void exibirPreOrdemRec(NoArvore no){
+        if(no != null){
             System.out.println(no.pessoa.nome + "("+ no.pessoa.sexo +") Idade: "+ no.pessoa.idade + " Peso: "+ no.pessoa.peso);
-            exibirRec(no.direita);
+            exibirEmOrdemRec(no.esquerda);
+            exibirEmOrdemRec(no.direita);
+        }
+    }
+
+    public void exibirEmOrdem(){
+        exibirEmOrdemRec(raiz);
+    }
+
+    private void exibirEmOrdemRec(NoArvore no){
+        if (no != null){
+            exibirEmOrdemRec(no.esquerda);
+            System.out.println(no.pessoa.nome + "("+ no.pessoa.sexo +") Idade: "+ no.pessoa.idade + " Peso: "+ no.pessoa.peso);
+            exibirEmOrdemRec(no.direita);
+        }
+    }
+
+    public void exibirPosOrdem(){
+        exibirPosOrdemRec(raiz);
+    }
+
+    private void exibirPosOrdemRec(NoArvore no){
+        if (no != null){
+            exibirPosOrdemRec(no.esquerda);
+            exibirPosOrdemRec(no.direita);
+            System.out.println(no.pessoa.nome + "("+ no.pessoa.sexo +") Idade: "+ no.pessoa.idade + " Peso: "+ no.pessoa.peso);
         }
     }
 }
@@ -141,10 +213,13 @@ class Quest3 {
             do {
                 System.out.println("\n ---- MENU ----");
                 System.out.println("1 - Inserir pessoa");
-                System.out.println("2 - Exibir Arvore em ordem");
-                System.out.println("3 - Gerar Lista de homens e mulheres");
-                System.out.println("4 - Exibir lista de homens");
-                System.out.println("5 - Exibir lista de mulheres");
+                System.out.println("2 - Remover pessoa");
+                System.out.println("3 - Exibir arvore em Pre Ordem");
+                System.out.println("4 - Exibir arvore em Ordem Simetrica");
+                System.out.println("5 - Exibir arvore em Pos Ordem");
+                System.out.println("6 - Gerar Lista de homens e mulheres");
+                System.out.println("7 - Exibir lista de homens");
+                System.out.println("8 - Exibir lista de mulheres");
                 System.out.println("0 - Encerrar o programa");
                 System.out.print("Opção: ");
                 opc = sc.nextInt();
@@ -168,12 +243,31 @@ class Quest3 {
                         break;
 
                     case 2:
-                        System.out.println("--- Arvore em ordem ---");
-                        arvore.exibirEmOrdem();
+                        System.out.println("Digite o nome do pessoa que deseja remover: ");
+                        String alvo = sc.nextLine();
+                        arvore.remover(alvo);
                         esperarEnter(sc);
                         break;
 
                     case 3:
+                        System.out.println("--- Arvore em Pre Ordem ---");
+                        arvore.exibirPreOrdem();
+                        esperarEnter(sc);
+                        break;
+
+                    case 4:
+                        System.out.println("--- Arvore em Ordem Simetrica ---");
+                        arvore.exibirEmOrdem();
+                        esperarEnter(sc);
+                        break;
+
+                    case 5:
+                        System.out.println("--- Arvore em Pos Ordem ---");
+                        arvore.exibirPosOrdem();
+                        esperarEnter(sc);
+                        break;
+
+                    case 6:
                         homens = new Lista();
                         mulheres = new Lista();
                         arvore.gerarListas(homens, mulheres);
@@ -181,13 +275,13 @@ class Quest3 {
                         esperarEnter(sc);
                         break;
 
-                    case 4:
+                    case 7:
                         System.out.println("--- Lista Homens ---");
                         homens.exibir();
                         esperarEnter(sc);
                         break;
 
-                    case 5:
+                    case 8:
                         System.out.println("--- Lista de Mulheres ---");
                         mulheres.exibir();
                         esperarEnter(sc);

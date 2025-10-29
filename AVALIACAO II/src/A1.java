@@ -49,7 +49,7 @@ class ArvoreBinariaA1 {
             this.raiz = removerNo(this.raiz, alvo);
             System.out.println("Valor removido com sucesso!");
         } catch (IllegalArgumentException exception) {
-            System.out.println("Falha ao remover, arvore vazia!");
+            System.out.println("Falha ao remover!");
         }
     }
 
@@ -81,9 +81,9 @@ class ArvoreBinariaA1 {
 
     private void preOrdem(No raiz) {
         if (!(raiz == null)) {
-                System.out.print(raiz.valor + " ");
-                preOrdem(raiz.esquerda);
-                preOrdem(raiz.direita);
+            System.out.print(raiz.valor + " ");
+            preOrdem(raiz.esquerda);
+            preOrdem(raiz.direita);
         }
     }
 
@@ -124,10 +124,11 @@ class ArvoreBinariaA1 {
     }
 
     private No buscarMenor(No raiz) {
-        while (raiz.esquerda != null) {
-            raiz = raiz.esquerda;
+        No corredor = raiz;
+        while (corredor.esquerda != null) {
+            corredor = corredor.esquerda;
         }
-        return raiz;
+        return corredor;
     }
 
     protected void limparTerminal() {
