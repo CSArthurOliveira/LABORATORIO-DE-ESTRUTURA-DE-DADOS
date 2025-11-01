@@ -3,11 +3,15 @@ import java.util.Scanner;
 class ArvoreBuscaBinaria extends ArvoreA4 {
 
     public int eCheia() {
-        return eCheiaRec(raiz) ? 1 : 0;
+        try {
+            return eCheiaRec(raiz) ? 1 : 0;
+        } catch (NullPointerException exception) {
+            throw new NullPointerException();
+        }
     }
 
     private boolean eCheiaRec(NoArvoreA4 node) {
-        if (this.raiz == null) return false;
+        if (this.raiz == null) throw new NullPointerException();
 
         if (node == null) return true;
 
@@ -75,10 +79,14 @@ class Quest5 {
                     break;
 
                 case 6:
-                    if (arvore.eCheia() == 1) {
-                        System.out.println("Arvore cheia!");
-                    } else {
-                        System.out.println("Arvore nao e cheia!");
+                    try {
+                        if (arvore.eCheia() == 1) {
+                            System.out.println("Arvore cheia!");
+                        } else {
+                            System.out.println("Arvore nao e cheia!");
+                        }
+                    } catch (NullPointerException exception) {
+                        System.out.println("Arvore vazia!");
                     }
                     esperarEnter();
                     break;
