@@ -109,7 +109,7 @@ class Grafo {
             System.out.print(i + "  ");
             for (int j = 0; j < totalVertices; j++) {
                 if (matrizDistancias[i][j] == SEM_CONEXAO) {
-                    System.out.print("∞\t");
+                    System.out.print("0\t");
                 } else {
                     System.out.print(matrizDistancias[i][j] + "\t");
                 }
@@ -532,9 +532,11 @@ class Grafo {
         // Teste 7: Adicionar vértice
         g.adicionarVertice();
         g.imprimirListaAdjacencia();
+        g.imprimirMatrizDistancias();
 
         // Teste 8: Adicionar aresta
         g.adicionarAresta(0, g.getTotalVertices() - 1, 10);
+        g.imprimirMatrizDistancias();
         g.floydWarshall();
 
         // Teste 9: Exportar
