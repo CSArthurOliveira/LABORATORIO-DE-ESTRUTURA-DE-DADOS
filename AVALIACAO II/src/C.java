@@ -109,7 +109,7 @@ class Grafo {
             System.out.print(i + "  ");
             for (int j = 0; j < totalVertices; j++) {
                 if (matrizDistancias[i][j] == SEM_CONEXAO) {
-                    System.out.print("0\t");
+                    System.out.print("Inf\t");
                 } else {
                     System.out.print(matrizDistancias[i][j] + "\t");
                 }
@@ -324,8 +324,9 @@ class Grafo {
         // Inicializa a matriz de distâncias
         for (int i = 0; i < totalVertices; i++) {
             for (int j = 0; j < totalVertices; j++) {
-                if (i == j) {
-                    // Distância de um vértice para ele mesmo é sempre 0
+                if (matrizDistancias[i][j] == SEM_CONEXAO && i != j) {
+                    menorDistancia[i][j] = SEM_CONEXAO;
+                } else if (i == j) {
                     menorDistancia[i][j] = 0;
                 } else {
                     menorDistancia[i][j] = matrizDistancias[i][j];
@@ -359,7 +360,7 @@ class Grafo {
             System.out.print(i + "  ");
             for (int j = 0; j < totalVertices; j++) {
                 if (menorDistancia[i][j] == SEM_CONEXAO) {
-                    System.out.print("0\t");
+                    System.out.print("Inf\t");
                 } else {
                     System.out.print(menorDistancia[i][j] + "\t");
                 }
